@@ -36,10 +36,15 @@ function App() {
     body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!"
   }
  ]); 
- const [search, setSearch] = useState('');
- const [searchResult, setSearchResults] = useState([]);
+  const [search, setSearch] = useState('');
+  const [searchResult, setSearchResults] = useState([]);
 
-
+  const history = useHistory();
+  const handleDelete = (id) => {
+    const postList = posts.filter( post => post.id === id);
+    setPosts(postList);
+    history.push('/');
+  }
 
 
   return (
@@ -59,7 +64,10 @@ function App() {
           <NewPost />
         </Route>
         <Route path='/post/:id'>
-          <PostPage />
+          <PostPage 
+           posts={posts}
+           handleDelete = {handleDelete}
+          />
         </Route>
         <Route path="/about" component={About} />
         <Route path="*" component={Missing} />
