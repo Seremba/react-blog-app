@@ -8,6 +8,7 @@ import About from './About';
 import Missing from './Missing';
 import {Switch, Route, useHistory} from 'react-router-dom'; 
 import {useState, useEffect} from 'react';
+import { format} from 'date-fns';
 
 function App() {
  const [posts, setPosts] = useState([
@@ -37,6 +38,8 @@ function App() {
   }
  ]); 
   const [search, setSearch] = useState('');
+  const [postTitle, setPostTitle] = useState('');
+  const [postBody, setPostBody] = useState('');
   const [searchResult, setSearchResults] = useState([]);
 
   const history = useHistory();
@@ -44,6 +47,12 @@ function App() {
     const postList = posts.filter( post => post.id === id);
     setPosts(postList);
     history.push('/');
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
+    const  datetime = '' ;   
+
   }
 
 
@@ -61,7 +70,13 @@ function App() {
           />
         </Route>
         <Route exact path='/post'>
-          <NewPost />
+          <NewPost 
+            postTitle={postTitle}
+            postBody = {postBody}
+            setPostTitle ={setPostTitle}
+            setPostBody ={setPostBody}
+            handleSubmit = {handleSubmit}
+          />
         </Route>
         <Route path='/post/:id'>
           <PostPage 
