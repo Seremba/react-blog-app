@@ -51,8 +51,13 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
-    const  datetime = '' ;   
-
+    const  datetime = format( new Date(), 'MMMM dd, yyy pp') ;   
+    const newPost = {id,title: postTitle, datetime, body: postBody }
+    const allPosts = [{...posts, newPost}]
+    setPosts(allPosts);
+    setPostTitle('');
+    setPostBody('');
+    history.push('/');
   }
 
 
