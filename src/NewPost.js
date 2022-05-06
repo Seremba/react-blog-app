@@ -7,7 +7,7 @@ const NewPost = ({
     <main className='NewPost'>
       <h2>NewPost</h2>
       <form className='newPostForm' onSubmit={handleSubmit}>
-        <lable htmlFor="postForm">Title: </lable>
+        <label htmlFor="postForm">Title: </label>
         <input 
           type="text" 
           id="postForm"
@@ -15,7 +15,7 @@ const NewPost = ({
           value={postTitle}  
         required/>
 
-        <lable htmlFor="postBody">Post: </lable>
+        <label htmlFor="postBody">Post: </label>
         <textarea
           type="text" 
           id="postBody"

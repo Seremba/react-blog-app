@@ -42,22 +42,32 @@ function App() {
   const [postBody, setPostBody] = useState('');
   const [searchResult, setSearchResults] = useState([]);
 
+  useEffect(() => {
+    const filteredResults = posts.filter((post) => 
+    
+    ((post.body).toLowerCase()).includes(search.toLowerCase())
+    || //or
+    ((post.title).toLowerCase()).includes(search.toLowerCase())
+    )
+    setSearchResults(filteredResults.reverse());
+  }, [posts, search])
+
   const history = useHistory();
   const handleDelete = (id) => {
     const postList = posts.filter( post => post.id === id);
     setPosts(postList);
-    history.push('/');
+    history.push("/");
   }
   const handleSubmit = (e) => {
     e.preventDefault();
     const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
     const  datetime = format( new Date(), 'MMMM dd, yyy pp') ;   
     const newPost = {id,title: postTitle, datetime, body: postBody }
-    const allPosts = [{...posts, newPost}]
+    const allPosts = [...posts, newPost]
     setPosts(allPosts);
-    setPostTitle('');
-    setPostBody('');
-    history.push('/');
+    setPostTitle("");
+    setPostBody("");
+    history.push("/");
   }
 
 
@@ -69,12 +79,12 @@ function App() {
        setSearch={setSearch}
       />
       <Switch>
-        <Route exact path='/'>
+        <Route exact path="/">
           <Home 
-            posts={posts}
+            posts={searchResult}
           />
         </Route>
-        <Route exact path='/post'>
+        <Route exact path="/post">
           <NewPost 
             postTitle={postTitle}
             postBody = {postBody}
@@ -83,7 +93,7 @@ function App() {
             handleSubmit = {handleSubmit}
           />
         </Route>
-        <Route path='/post/:id'>
+        <Route path="/post/:id">
           <PostPage 
            posts={posts}
            handleDelete = {handleDelete}
