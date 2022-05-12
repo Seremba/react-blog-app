@@ -3,6 +3,7 @@ import Nav from './Nav';
 import Footer from './Footer';
 import Home from './Home';
 import NewPost from './NewPost';
+import EditPost from './EditPost';
 import PostPage from './PostPage';
 import About from './About';
 import Missing from './Missing';
@@ -14,7 +15,7 @@ import {
 import {useState, useEffect} from 'react';
 import { format} from 'date-fns';
 import axios from 'axios';
-import EditPost from './EditPost';
+
 
 function App() {
   const [posts, setPosts] = useState([]); 
@@ -82,10 +83,10 @@ function App() {
 
   const handleEdit = async (id) => {
     const  datetime = format( new Date(), 'MMMM dd, yyy pp') ;   
-    const updatePost = {id,title: editTitle, datetime, body: editBody };
+    const updatedPost = {id,title: editTitle, datetime, body: editBody };
 
     try {
-      const response = axios.put(`http://localhost:3500/posts/${id}`, updatePost);
+      const response = await axios.put(`http://localhost:3500/posts/${id}`, updatedPost);
       setPosts(posts.map(post => post.id === id ? {...response.data}: post));
       setEditTitle('');
       setEditBody('');
