@@ -14,6 +14,7 @@ import {
 import {useState, useEffect} from 'react';
 import { format} from 'date-fns';
 import axios from 'axios';
+import EditPost from './EditPost';
 
 function App() {
   const [posts, setPosts] = useState([]); 
@@ -133,7 +134,18 @@ function App() {
                   setPostBody ={setPostBody}
                   handleSubmit = {handleSubmit}
               />}
-              />
+        />
+
+        <Route path="/edit/:id" 
+              element={<EditPost
+                  posts={posts}
+                  editTitle={editTitle}
+                  editBody = {editBody}
+                  setEditTitle ={setEditTitle}
+                  setEditBody ={setEditBody}
+                  handleEdit = {handleEdit}
+                />}
+         />
           
         <Route path="/post/:id"
          element={<PostPage 
