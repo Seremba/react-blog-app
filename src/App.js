@@ -13,7 +13,6 @@ import {
 } from "react-router-dom"; 
 import {useState, useEffect} from 'react';
 import { format} from 'date-fns';
-// import api from './api/posts'
 import axios from 'axios';
 
 function App() {
@@ -21,6 +20,8 @@ function App() {
   const [search, setSearch] = useState('');
   const [postTitle, setPostTitle] = useState('');
   const [postBody, setPostBody] = useState('');
+  const [editTitle, setEditTitle] = useState('');
+  const [editBody, setEditBody] = useState('');
   const [searchResult, setSearchResults] = useState([]);
  
   const baseUrl = 'http://localhost:3500/posts';
@@ -76,6 +77,21 @@ function App() {
       console.log(`Error: ${err.message}`);
     }
     
+  }
+
+  const handleEdit = async (id) => {
+    const  datetime = format( new Date(), 'MMMM dd, yyy pp') ;   
+    const updatePost = {id,title: editTitle, datetime, body: editBody };
+
+    try {
+      const response = axios.put(`http://localhost:3500/posts/${id}`, updatePost);
+      setPosts(posts.map(post => post.id === id ? {...response.data}: post));
+      setEditTitle('');
+      setEditBody('');
+      returnToHome();
+    }catch(err) {
+      console.log(`Error: ${err.message}`);
+    }
   }
 
   const handleDelete = async (id) => {
