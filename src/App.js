@@ -15,6 +15,7 @@ import {
 import {useState, useEffect} from 'react';
 import { format} from 'date-fns';
 import axios from 'axios';
+import useWindowSize from './hooks/useWindowSize';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
   const [editTitle, setEditTitle] = useState('');
   const [editBody, setEditBody] = useState('');
   const [searchResult, setSearchResults] = useState([]);
+  const { width } = useWindowSize();
  
   const baseUrl = 'http://localhost:3500/posts';
   // usage of axios
@@ -113,7 +115,7 @@ function App() {
     
     <div className="App">
 
-      <Header title="My Blog" />
+      <Header title="My Blog" width={width}/>
       <Nav 
        search={search}
        setSearch={setSearch}
