@@ -16,6 +16,7 @@ import {useState, useEffect} from 'react';
 import { format} from 'date-fns';
 import axios from 'axios';
 import useWindowSize from './hooks/useWindowSize';
+import useAxiosFetch from './hooks/useAxiosFetch';
 
 
 function App() {
@@ -27,9 +28,14 @@ function App() {
   const [editBody, setEditBody] = useState('');
   const [searchResult, setSearchResults] = useState([]);
   const { width } = useWindowSize();
+  const { data, fetchError, isLoading } = useAxiosFetch('httpp://localhost:3500/posts'); 
  
   const baseUrl = 'http://localhost:3500/posts';
-  // usage of axios
+ 
+ useEffect(() => {
+   setPosts(data);
+ },[data]);
+  /* usage of axios
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -48,7 +54,7 @@ function App() {
     }
 
     fetchPosts();
-  }, [])
+  }, []) */
 
   useEffect(() => {
     const filteredResults = posts.filter((post) => 
@@ -126,6 +132,8 @@ function App() {
           element={
             <Home 
             posts={searchResult}
+            fetchError={fetchError}
+            isLoading= {isLoading}
             />} 
         />
           
