@@ -9,8 +9,7 @@ const DataContext = createContext({});
 export const DataProvider = ({children}) => {
   const [posts, setPosts] = useState([]); 
   const [search, setSearch] = useState('');
-  const [postTitle, setPostTitle] = useState('');
-  const [postBody, setPostBody] = useState('');
+  
   const [editTitle, setEditTitle] = useState('');
   const [editBody, setEditBody] = useState('');
   const [searchResult, setSearchResults] = useState([]);
@@ -55,23 +54,7 @@ export const DataProvider = ({children}) => {
   const baseUrl = 'http://localhost:3500/posts';
   let navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
-    const  datetime = format( new Date(), 'MMMM dd, yyy pp') ;   
-    const newPost = {id,title: postTitle, datetime, body: postBody }
-    try{ 
-      const response = await axios.post(baseUrl, newPost)
-      const allPosts = [...posts, response.data]
-      setPosts(allPosts);
-      setPostTitle("");
-      setPostBody("");
-      navigate("/", {return: true})
-    } catch(err) {
-      console.log(`Error: ${err.message}`);
-    }
-    
-  }
+  
 
   const handleEdit = async (id) => {
     const  datetime = format( new Date(), 'MMMM dd, yyy pp') ;   
@@ -88,24 +71,12 @@ export const DataProvider = ({children}) => {
     }
   }
 
-  const handleDelete = async (id) => {
-    
-    try {
-       await axios.delete(`http://localhost:3500/posts/${id}`);
-        const postList = posts.filter( post => post.id === id);
-        setPosts(postList);
-        navigate("/", {return: true})
-      } catch(err) {
-        console.log(`Err: ${err.message}`);
-      }
-  }
+  
     return (
         <DataContext.Provider value={{
              search, setSearch,
              searchResult, fetchError, isLoading,
-             postTitle, postBody, setPostTitle, setPostBody, handleSubmit,
-             posts, handleEdit, editBody, setEditBody, editTitle, setEditTitle,
-             handleDelete
+             posts, setPosts, handleEdit, editBody, setEditBody, editTitle, setEditTitle,
         }}>
             {children}
         </DataContext.Provider>
