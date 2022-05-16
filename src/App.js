@@ -28,7 +28,7 @@ function App() {
   const [editBody, setEditBody] = useState('');
   const [searchResult, setSearchResults] = useState([]);
   const { width } = useWindowSize();
-  const { data, fetchError, isLoading } = useAxiosFetch('httpp://localhost:3500/posts'); 
+  const { data, fetchError, isLoading } = useAxiosFetch('http://localhost:3500/posts'); 
  
   const baseUrl = 'http://localhost:3500/posts';
  
